@@ -1,3 +1,16 @@
+# Getting Started
+To install the script run "install.sh"
+
+Currently, the installer does a non-destructive add to your crontab.
+
+# TODO
+* document how to used once installed
+* update installer to validate ruby version
+* update installer to install ruby gems
+* document shell and ruby scripts
+
+# References
+
 Google GMail API for Ruby
 https://developers.google.com/gmail/api/quickstart/ruby
 
