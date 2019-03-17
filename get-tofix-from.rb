@@ -79,7 +79,7 @@ keepInboxLabelId=labelsNameMap["keep-inbox"]
 puts "keepInboxLabelId - #{keepInboxLabelId}"
 
 puts "------------"
-tofix=File.open('get-tofix-from.txt', 'w')
+tofix=File.open('log/get-tofix-from.txt', 'w')
 fromlist.keys.each { |email|
   puts "email=[#{email}]"
   tofix.puts "#{email}"

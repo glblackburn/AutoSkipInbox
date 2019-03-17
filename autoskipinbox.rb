@@ -90,7 +90,7 @@ result.messages.each { |message|
 puts "==============="
 puts "==============="
 
-fromfile=File.open('autoskipinbox.txt', 'w')
+fromfile=File.open('log/autoskipinbox.txt', 'w')
 
 fromlist.keys.each { |key|
   email = ""
