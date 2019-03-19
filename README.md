@@ -6,9 +6,25 @@ TODO
 
 ## Install
 
-To install the script run "install.sh"
+The installer will do the following:
+* detech ruby in your path
+* check the version
+* install the needed gems
+* add "run-it.sh" to your crontab.
 
-Currently, the installer does a non-destructive add to your crontab.
+### Prerequisites
+
+For MacOS, install an updated version of ruby.  Personally, I use
+Homebrew to install Ruby.
+
+Homebrew: https://brew.sh/
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+Ruby: https://www.ruby-lang.org/en/documentation/installation/#homebrew
+    brew install ruby
+
+### install.sh
+To install run the "install.sh" script.
+    install.sh
 
 # TODO
 * add overview
