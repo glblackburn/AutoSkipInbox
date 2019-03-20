@@ -1,6 +1,8 @@
 #!/bin/bash
 
-PATH="/usr/local/bin:${PATH}"
+RUBY_PATH="/usr/local/opt/ruby/bin"
+PATH="${RUBY_PATH}:${PATH}"
+
 BASEDIR=$(dirname $0)
 LOGDIR=${BASEDIR}/log
 TIMESTAMP=`date +%Y-%m-%d_%H%M%S`

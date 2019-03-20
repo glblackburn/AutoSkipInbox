@@ -30,12 +30,26 @@ To install run the "install.sh" script.
 
     install.sh
 
+### run-it.sh
+
+run-it.sh does not depended on the PATH variable, because this script
+is run from cron.  The RUBY_PATH variable needs to be updated to the
+install location for the version of ruby you are using.
+
+Homebrew as of 3/19/2019, no longer symlinks ruby into /usr/local/bin.  The new path to ruby is '/usr/local/opt/ruby/bin'.
+
+From the Homebrew install for ruby.
+
+    If you need to have ruby first in your PATH run:
+      echo 'export PATH="/usr/local/opt/ruby/bin:$PATH"' >> ~/.bash_profile
+
 # TODO
+* figure out how to do google auth as part of install.  there is a step past saving the client_secret.json file that prompts as part of the auth.
 * add overview
-* update installer to install ruby gems
 * document how to used once installed
 * update installer to validate ruby version
 * DONE: document shell and ruby scripts
+* DONE: update installer to install ruby gems
 
 # Scripts
 ## install.sh
