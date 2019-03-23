@@ -8,8 +8,6 @@ LOGDIR=${BASEDIR}/log
 TIMESTAMP=`date +%Y-%m-%d_%H%M%S`
 RUNLOG=${LOGDIR}/run-it_${TIMESTAMP}.log
 LOG=${LOGDIR}/autoskipinbox.log
-AUTOSKIPINBOXOUT=${BASEDIR}/autoskipinbox.out
-TOFIXOUT=${BASEDIR}/get-tofix-from.out
 
 cd ${BASEDIR}
 mkdir -p ${LOGDIR}
@@ -38,6 +36,13 @@ run get-tofix-from.rb
 ================================================================================
 EOF
 ruby get-tofix-from.rb
+
+cat <<EOF
+================================================================================
+run get-todump-from.rb
+================================================================================
+EOF
+ruby get-todump-from.rb
 
 cat <<EOF
 ================================================================================

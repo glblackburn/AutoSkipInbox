@@ -1,8 +1,8 @@
 #
-# helpful script to produce a list of emails from GMail that have the label "autoskipinbox-tofix"
+# helpful script to produce a list of emails from GMail that have the label "autoskipinbox-todump"
 #
 # run:
-# ruby get-tofix-from.rb | tee get-tofix-from.out
+# ruby get-todump-from.rb | tee get-todump-from.out
 #
 require_relative 'authorize.rb'
 require_relative 'labels.rb'
@@ -18,9 +18,18 @@ service.authorization = authorize
 user_id = 'me'
 labelsNameMap, labelsIdMap = getLabelsMaps(service, user_id)
 
+autoskipLabelId=labelsNameMap["autoskipinbox"]
+dumpLabelId=labelsNameMap["autoskipinbox/dump"]
+toDumpLabelId=labelsNameMap["autoskipinbox/todump"]
+inboxId=labelsNameMap["INBOX"]
+
+puts "inboxId - #{inboxId}"
+puts "toDumpLabelId - #{toDumpLabelId}"
+puts "dumpLabelId - #{dumpLabelId}"
+
 result = service.list_user_setting_filters(user_id)
 puts 'None found' if result.filter.empty?
-puts "result.messages.count=[#{result.filter.count}]"
+puts "result.filter.count=[#{result.filter.count}]"
 
 filterList=Hash.new(0)
 
@@ -44,8 +53,7 @@ result.filter.each { |filter|
 fromlist=Hash.new(0)
 
 # https://www.rubydoc.info/github/google/google-api-ruby-client/Google/Apis/GmailV1/GmailService#list_user_messages-instance_method
-result = service.list_user_messages(user_id, q: "label:autoskipinbox-tofix")
-#result = service.list_user_messages(user_id, q: "label:autoskipinbox-tofix", fields: "payload")
+result = service.list_user_messages(user_id, q: "label:autoskipinbox/todump")
 # https://www.rubydoc.info/github/google/google-api-ruby-client/Google/Apis/GmailV1/ListMessagesResponse
 puts "result:=[#{result}]"
 if result.messages && !result.messages.empty?
@@ -68,6 +76,12 @@ if result.messages && !result.messages.empty?
     end
     fromlist[email] += 1
     puts "email=[#{email}]"
+
+    # move the message to the dump
+    modifyMessageRequest=Google::Apis::GmailV1::ModifyMessageRequest.new
+    modifyMessageRequest.add_label_ids=[dumpLabelId]
+    modifyMessageRequest.remove_label_ids=[inboxId, toDumpLabelId, autoskipLabelId]
+    service.modify_message(user_id, message.id, modifyMessageRequest)
   }
 else
   puts 'None found'
@@ -75,15 +89,12 @@ end
 
 puts "==============="
 
-keepInboxLabelId=labelsNameMap["keep-inbox"]
-puts "keepInboxLabelId - #{keepInboxLabelId}"
-
 puts "------------"
 fromlist.keys.each { |email|
   puts "email=[#{email}]"
 
   if filterList[email] == 0 
-    filterAction=Google::Apis::GmailV1::FilterAction.new(add_label_ids: [keepInboxLabelId])
+    filterAction=Google::Apis::GmailV1::FilterAction.new(add_label_ids: [dumpLabelId], remove_label_ids: [inboxId])
     filterCriteria=Google::Apis::GmailV1::FilterCriteria.new(from: email)
     filter=Google::Apis::GmailV1::Filter.new(action: filterAction, criteria: filterCriteria)
     

@@ -82,7 +82,7 @@ result.messages.each { |message|
     modifyMessageRequest=Google::Apis::GmailV1::ModifyMessageRequest.new
     modifyMessageRequest.add_label_ids=[autoSkipInboxId]
     modifyMessageRequest.remove_label_ids=[inboxId]
-    service.modify_message(user_id, message.id,modifyMessageRequest)
+    service.modify_message(user_id, message.id, modifyMessageRequest)
 #    exit
   end
 }
