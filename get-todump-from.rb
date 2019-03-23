@@ -6,6 +6,7 @@
 #
 require_relative 'authorize.rb'
 require_relative 'labels.rb'
+require_relative 'filtres.rb'
 
 # Initialize the API
 APPLICATION_NAME = 'Gmail API Ruby Quickstart'.freeze
@@ -27,28 +28,7 @@ puts "inboxId - #{inboxId}"
 puts "toDumpLabelId - #{toDumpLabelId}"
 puts "dumpLabelId - #{dumpLabelId}"
 
-result = service.list_user_setting_filters(user_id)
-puts 'None found' if result.filter.empty?
-puts "result.filter.count=[#{result.filter.count}]"
-
-filterList=Hash.new(0)
-
-result.filter.each { |filter| 
-  # https://www.rubydoc.info/github/google/google-api-ruby-client/Google/Apis/GmailV1/Filter
-  puts "============================================================"
-  puts "filter.id=[#{filter.id}]"
-  # https://www.rubydoc.info/github/google/google-api-ruby-client/Google/Apis/GmailV1/FilterCriteria
-  puts "filter.criteria.from=[#{filter.criteria.from}]"
-  # https://www.rubydoc.info/github/google/google-api-ruby-client/Google/Apis/GmailV1/FilterAction
-  puts "filter.action.add_label_ids=[#{filter.action.add_label_ids}]"
-#  filter.action.add_label_ids.each { |label_id|
-#    puts "  label_id=[#{label_id}] label_name=[#{labelsIdMap[label_id]}]"
-#  }
-  puts "filter.action.remove_label_ids=[#{filter.action.remove_label_ids}]"
-  puts "filter.action.forward=[#{filter.action.forward}]"
-
-  filterList[filter.criteria.from] += 1
-}
+filterList=getFiltersMap(service, user_id)
 
 fromlist=Hash.new(0)
 
