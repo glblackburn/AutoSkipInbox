@@ -1,2 +1,7 @@
+# AutoSkipInbox working folders.  (Do not check in)
 config/
 log/
+
+# Emacs files #
+###############
+*~
