@@ -7,6 +7,7 @@ BASEDIR=$(dirname $0)
 LOGDIR=${BASEDIR}/log
 TIMESTAMP=`date +%Y-%m-%d_%H%M%S`
 RUNLOG=${LOGDIR}/run-it_${TIMESTAMP}.log
+FILTERSLOG=${LOGDIR}/filters_${TIMESTAMP}.log
 LOG=${LOGDIR}/autoskipinbox.log
 
 cd ${BASEDIR}
@@ -46,7 +47,14 @@ ruby get-todump-from.rb
 
 cat <<EOF
 ================================================================================
-check in the output
+run get-filters.rb
+================================================================================
+EOF
+ruby get-filters.rb > ${FILTERSLOG}
+
+cat <<EOF
+================================================================================
+git status check
 ================================================================================
 EOF
 
@@ -69,7 +77,7 @@ EOF
 {
     date=`date`
     emailsmoved=`cat ${RUNLOG} | grep "move email:" | wc -l`
-    filtercount=`cat ${RUNLOG} | grep "filter.id" | wc -l`
+    filtercount=`cat ${FILTERSLOG} | grep "filter.id" | wc -l`
     cat <<EOF
 {date:${date}, emailsmoved:${emailsmoved}, filtercount:${filtercount}}
 EOF

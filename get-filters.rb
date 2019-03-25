@@ -34,9 +34,9 @@ result.filter.each { |filter|
   puts "filter.criteria.from=[#{filter.criteria.from}]"
   # https://www.rubydoc.info/github/google/google-api-ruby-client/Google/Apis/GmailV1/FilterAction
   puts "filter.action.add_label_ids=[#{filter.action.add_label_ids}]"
-  filter.action.add_label_ids.each { |label_id|
-    puts "  label_id=[#{label_id}] label_name=[#{labelsIdMap[label_id]}]"
-  }
+#  filter.action.add_label_ids.each { |label_id|
+#    puts "  label_id=[#{label_id}] label_name=[#{labelsIdMap[label_id]}]"
+#  }
   puts "filter.action.remove_label_ids=[#{filter.action.remove_label_ids}]"
   puts "filter.action.forward=[#{filter.action.forward}]"
 }

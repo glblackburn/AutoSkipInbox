@@ -6,7 +6,7 @@
 #
 require_relative 'authorize.rb'
 require_relative 'labels.rb'
-require_relative 'filtres.rb'
+require_relative 'filters.rb'
 
 # Initialize the API
 APPLICATION_NAME = 'Gmail API Ruby Quickstart'.freeze
