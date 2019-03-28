@@ -84,6 +84,10 @@ created to match incoming email with the from address and apply the
 * TODO: update to apply "keep-inbox" and "Inbox" labels.  Currently,
   this is a manual step.
 
+## get-label-report.rb
+
+get-label-report.rb will pull counts of uniq from addresses with each
+label used.
 
 # References
 
