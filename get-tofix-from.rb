@@ -19,6 +19,13 @@ service.authorization = authorize
 user_id = 'me'
 labelsNameMap, labelsIdMap = getLabelsMaps(service, user_id)
 
+keepInboxLabelId=labelsNameMap["keep-inbox"]
+autoskipLabelId=labelsNameMap["autoskipinbox"]
+toFixLabelId=labelsNameMap["autoskipinbox/tofix"]
+inboxId=labelsNameMap["INBOX"]
+
+#puts "keepInboxLabelId - #{keepInboxLabelId}"
+
 filterList=getFiltersMap(service, user_id)
 
 fromlist=Hash.new(0)
@@ -48,15 +55,18 @@ if result.messages && !result.messages.empty?
     end
     fromlist[email] += 1
     puts "email=[#{email}]"
+
+    # move the message to the inbox and add to
+    modifyMessageRequest=Google::Apis::GmailV1::ModifyMessageRequest.new
+    modifyMessageRequest.add_label_ids=[keepInboxLabelId, inboxId]
+    modifyMessageRequest.remove_label_ids=[autoskipLabelId, toFixLabelId]
+    service.modify_message(user_id, message.id, modifyMessageRequest)
   }
 else
   puts 'None found'
 end
 
 puts "==============="
-
-keepInboxLabelId=labelsNameMap["keep-inbox"]
-puts "keepInboxLabelId - #{keepInboxLabelId}"
 
 puts "------------"
 fromlist.keys.each { |email|
