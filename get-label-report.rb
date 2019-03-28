@@ -46,11 +46,11 @@ def getFromCountHash(service, user_id, label)
 end
 
 labels=["inbox", "autoskipinbox", "autoskipinbox-tofix", "autoskipinbox-dump", "autoskipinbox-todump"]
+
 labels.each { |label|
-  puts "label=[#{label}]"
   fromHash=getFromCountHash(service, user_id, label)
 
   fromHash.keys.each { |email|
-    puts "   count=[#{fromHash[email]}] email=[#{email}]"
+    puts "{ label:#{label}, count:#{fromHash[email]}, from:#{email} },"
   }
 }
