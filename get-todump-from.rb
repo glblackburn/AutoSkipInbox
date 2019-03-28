@@ -24,9 +24,9 @@ dumpLabelId=labelsNameMap["autoskipinbox/dump"]
 toDumpLabelId=labelsNameMap["autoskipinbox/todump"]
 inboxId=labelsNameMap["INBOX"]
 
-puts "inboxId - #{inboxId}"
-puts "toDumpLabelId - #{toDumpLabelId}"
-puts "dumpLabelId - #{dumpLabelId}"
+#puts "inboxId - #{inboxId}"
+#puts "toDumpLabelId - #{toDumpLabelId}"
+#puts "dumpLabelId - #{dumpLabelId}"
 
 filterList=getFiltersMap(service, user_id)
 
