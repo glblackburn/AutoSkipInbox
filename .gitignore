@@ -5,3 +5,4 @@ log/
 # Emacs files #
 ###############
 *~
+.ruby-version
