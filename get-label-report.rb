@@ -19,29 +19,39 @@ user_id = 'me'
 
 def getFromCountHash(service, user_id, label)
   fromlist=Hash.new(0)
+  messageCount=0
+  missingFromCount=0
   
-  result = service.list_user_messages(user_id, q: "label:#{label}")
+  result = service.list_user_messages(user_id, max_results: 1000, q: "label:#{label}")
 #  puts "result:=[#{result}]"
   if result.messages && !result.messages.empty?
-    result.messages.each { |message| 
+    result.messages.each { |message|
+      messageCount += 1
 #      puts "-------"
       msg = service.get_user_message(user_id, message.id)
-#      puts "message.id=[#{message.id}] - msg.label_ids=[#{msg.label_ids}]" 
-      from=msg.payload.headers.find {|h| h.name == "From" }.value
+#      puts "message.id=[#{message.id}] - msg.label_ids=[#{msg.label_ids}]"
+      from_header=msg.payload.headers.find {|h| h.name == "From" }
+      if from_header.respond_to?(:value)
+        from=from_header.value
 #      puts "#{from}"
-      email = ""
-      matches = from.match /<(.*)>/
-      if matches
-        email=matches[1] 
+        email = ""
+        matches = from.match /<(.*)>/
+        if matches
+          email=matches[1] 
+        else
+          email=from
+        end
+        fromlist[email] += 1
       else
-        email=from
+        puts "getFromCountHash: message missing From.value: message.id=[#{message.id}] - msg.label_ids=[#{msg.label_ids}]"
+        missingFromCount += 1
       end
-      fromlist[email] += 1
 #      puts "email=[#{email}]"
     }
   else
 #    puts 'None found'
   end
+  puts "getFromCountHash: messageCount=[#{messageCount}] missingFromCount=[#{missingFromCount}] user_id=[#{user_id}] label=[#{label}] result_size_estimagte=[#{result.result_size_estimate}]"
   return fromlist
 end
 
