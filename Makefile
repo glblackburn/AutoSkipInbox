@@ -42,6 +42,9 @@ google-api-client-0.53.0:
 
 setup: brew rbenv .ruby-version ruby google-api-client-0.53.0 ## setup the system to run this application
 
+configure-google-api-auth: ## setup the auth for GMail api
+	open https://developers.google.com/gmail/api/quickstart/ruby
+
 run: ## run the AutoSkipInbox
 	ruby autoskipinbox.rb
 
