@@ -4,7 +4,8 @@ RUBY_PATH="/usr/local/opt/ruby/bin"
 PATH="${RUBY_PATH}:${PATH}"
 
 BASEDIR=$(dirname $0)
-LOGDIR=${BASEDIR}/log
+PARENTDIR=$(dirname ${BASEDIR})
+LOGDIR=${PARENTDIR}/log
 TIMESTAMP=`date +%Y-%m-%d_%H%M%S`
 RUNLOG=${LOGDIR}/run-it_${TIMESTAMP}.log
 FILTERSLOG=${LOGDIR}/filters_${TIMESTAMP}.log
@@ -58,6 +59,7 @@ git status check
 ================================================================================
 EOF
 
+cd ${PARENTDIR}
 git status
 #git add .
 #git commit -m "run ${TIMESTAMP}"

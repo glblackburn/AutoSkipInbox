@@ -11,7 +11,8 @@ script_dir=$(dirname $0)
 ################################################################################
 # default values
 ################################################################################
-report_dir=${script_dir}/log/reports
+parent_dir=$(dirname ${script_dir})
+report_dir=${parent_dir}/log/reports
 ts=`date +%Y-%m-%d_%H%M%S`
 report_file=${report_dir}/get-label-report_${ts}.txt
 

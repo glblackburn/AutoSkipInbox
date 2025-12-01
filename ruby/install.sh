@@ -6,8 +6,9 @@ RUBY_PATH="/usr/local/opt/ruby/bin"
 PATH="${RUBY_PATH}:${PATH}"
 
 BASEDIR=$(dirname $0)
-CONFIGDIR=${BASEDIR}/config
-LOGDIR=${BASEDIR}/log
+PARENTDIR=$(dirname ${BASEDIR})
+CONFIGDIR=${PARENTDIR}/config
+LOGDIR=${PARENTDIR}/log
 TIMESTAMP=`date +%Y-%m-%d_%H%M%S`
 INSTALLLOG=${LOGDIR}/install_${TIMESTAMP}.log
 

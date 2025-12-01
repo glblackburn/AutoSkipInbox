@@ -4,6 +4,7 @@
 # run:
 # ruby autoskipinbox.rb | tee autoskipinbox.out
 #
+require 'fileutils'
 require_relative 'authorize.rb'
 require_relative 'labels.rb'
 
@@ -90,7 +91,9 @@ result.messages.each { |message|
 puts "==============="
 puts "==============="
 
-fromfile=File.open('log/autoskipinbox.txt', 'w')
+log_dir = File.join(File.dirname(__FILE__), '..', 'log')
+FileUtils.mkdir_p(log_dir) unless File.directory?(log_dir)
+fromfile=File.open(File.join(log_dir, 'autoskipinbox.txt'), 'w')
 
 fromlist.keys.each { |key|
   email = ""
