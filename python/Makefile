@@ -7,8 +7,21 @@ PIP ?= pip3
 VENV_DIR ?= venv
 VENV_PYTHON = $(VENV_DIR)/bin/python
 VENV_PIP = $(VENV_DIR)/bin/pip
+CLIENT_SECRET = $(HOME)/.secure/AutoSkipInbox/client_secret.json
 
 default: help
+
+check-credentials: ## verify client_secret.json exists
+	@if [ ! -f "$(CLIENT_SECRET)" ]; then \
+		echo "Error: client_secret.json not found at $(CLIENT_SECRET)"; \
+		echo "Please download it from Google Cloud Console and save it to:"; \
+		echo "  $(CLIENT_SECRET)"; \
+		echo ""; \
+		echo "You may need to create the directory first:"; \
+		echo "  mkdir -p $$(dirname $(CLIENT_SECRET))"; \
+		exit 1; \
+	fi
+	@echo "✓ Credentials file found at $(CLIENT_SECRET)"
 
 venv: ## create a Python virtual environment
 	$(PYTHON) -m venv $(VENV_DIR)
@@ -22,22 +35,22 @@ install-venv: venv ## create venv and install dependencies in it
 
 setup: install ## setup the system to run this application (alias for install)
 
-run: ## run the AutoSkipInbox
+run: check-credentials ## run the AutoSkipInbox
 	$(PYTHON) autoskipinbox.py
 
-run-venv: install-venv ## run using virtual environment
+run-venv: install-venv check-credentials ## run using virtual environment
 	$(VENV_PYTHON) autoskipinbox.py
 
-run-tofix: ## run get_tofix_from.py
+run-tofix: check-credentials ## run get_tofix_from.py
 	$(PYTHON) get_tofix_from.py
 
-run-todump: ## run get_todump_from.py
+run-todump: check-credentials ## run get_todump_from.py
 	$(PYTHON) get_todump_from.py
 
-run-filters: ## run get_filters.py
+run-filters: check-credentials ## run get_filters.py
 	$(PYTHON) get_filters.py
 
-run-label-report: ## run get_label_report.py
+run-label-report: check-credentials ## run get_label_report.py
 	$(PYTHON) get_label_report.py
 
 test: ## test that Python and dependencies are available

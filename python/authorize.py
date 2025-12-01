@@ -13,10 +13,10 @@ SCOPES = [
     'https://www.googleapis.com/auth/gmail.modify'
 ]
 
-# Paths relative to parent directory (where config folder is located)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CLIENT_SECRETS_PATH = os.path.join(BASE_DIR, 'config', 'client_secret.json')
-CREDENTIALS_PATH = os.path.join(BASE_DIR, 'config', 'token.json')
+# Paths in user's secure directory
+SECURE_DIR = os.path.join(os.path.expanduser('~'), '.secure', 'AutoSkipInbox')
+CLIENT_SECRETS_PATH = os.path.join(SECURE_DIR, 'client_secret.json')
+CREDENTIALS_PATH = os.path.join(SECURE_DIR, 'token.json')
 
 
 def authorize():
@@ -50,7 +50,7 @@ def authorize():
             creds = flow.run_local_server(port=0)
         
         # Save the credentials for the next run
-        os.makedirs(os.path.dirname(CREDENTIALS_PATH), exist_ok=True)
+        os.makedirs(SECURE_DIR, exist_ok=True)
         with open(CREDENTIALS_PATH, 'w') as token:
             token.write(creds.to_json())
     

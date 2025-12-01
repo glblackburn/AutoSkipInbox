@@ -39,20 +39,26 @@ The Python scripts provide the same functionality as the Ruby versions:
    - Enable the Gmail API for your project
    - Create OAuth 2.0 credentials (Desktop app)
    - Download the credentials JSON file
-   - Save it as `../config/client_secret.json` (relative to the python folder)
+   - Create the secure directory: `mkdir -p ~/.secure/AutoSkipInbox`
+   - Save the credentials file as `~/.secure/AutoSkipInbox/client_secret.json`
 
    For detailed instructions, see:
    https://developers.google.com/gmail/api/quickstart/python
 
 ## Configuration
 
-The scripts expect the following directory structure:
+The scripts store credentials in a secure location in your home directory:
+
+```
+~/.secure/AutoSkipInbox/
+├── client_secret.json  # OAuth credentials (you need to download this)
+└── token.json          # Auto-generated after first authorization
+```
+
+The project directory structure:
 
 ```
 AutoSkipInbox/
-├── config/
-│   ├── client_secret.json  # OAuth credentials (you need to download this)
-│   └── token.json          # Auto-generated after first authorization
 ├── log/                     # Log files directory (auto-created)
 └── python/
     ├── *.py                 # Python scripts
@@ -66,9 +72,9 @@ The first time you run any script, it will:
 1. Open your default web browser
 2. Prompt you to sign in to your Google account
 3. Ask for permission to access your Gmail account
-4. Save the authorization token to `../config/token.json`
+4. Save the authorization token to `~/.secure/AutoSkipInbox/token.json`
 
-**Note:** The token file will be created automatically after the first successful authorization. If you encounter authentication errors, you may need to delete `../config/token.json` and re-authorize.
+**Note:** The token file will be created automatically after the first successful authorization. If you encounter authentication errors, you may need to delete `~/.secure/AutoSkipInbox/token.json` and re-authorize.
 
 ## Usage
 
@@ -128,7 +134,7 @@ The scripts require the following Gmail API scopes:
 ### Authentication Errors
 
 If you get authentication errors:
-1. Delete `../config/token.json`
+1. Delete `~/.secure/AutoSkipInbox/token.json`
 2. Re-run the script to trigger a new authorization flow
 
 ### Missing Labels
@@ -147,7 +153,7 @@ If you get import errors:
 
 - Token file format: Python uses `token.json` instead of `token.yaml`
 - File naming: Python files use underscores (e.g., `get_filters.py`) instead of hyphens
-- Path handling: Python scripts automatically resolve paths relative to the parent directory
+- Credential storage: Python scripts store credentials in `~/.secure/AutoSkipInbox/` instead of `config/` in the project directory
 
 ## References
 
