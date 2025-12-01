@@ -2,7 +2,14 @@ SHELL=/bin/bash
 .EXPORT_ALL_VARIABLES:
 .SHELLFLAGS = -uec -o pipefail
 
+# Check if pyenv is available and use it, otherwise fall back to system python
+ifneq ($(shell command -v pyenv 2>/dev/null),)
+PYENV_ROOT = $(shell pyenv root)
+PYTHON_VERSION = $(shell cat .python-version 2>/dev/null || echo "3.11")
+PYTHON = $(shell pyenv which python 2>/dev/null || echo python3)
+else
 PYTHON ?= python3
+endif
 PIP ?= pip3
 VENV_DIR ?= venv
 VENV_PYTHON = $(VENV_DIR)/bin/python
@@ -10,6 +17,36 @@ VENV_PIP = $(VENV_DIR)/bin/pip
 CLIENT_SECRET = $(HOME)/.secure/AutoSkipInbox/client_secret.json
 
 default: help
+
+#TODO
+install-homebrew: ## TODO: install homebrew
+
+# need to update to check if pyenv already installed
+install-pyenv: ## install pyenv to manage python
+	@if ! command -v pyenv >/dev/null 2>&1; then \
+		echo "Installing pyenv..."; \
+		brew install pyenv; \
+		echo "Configuring shell..."; \
+		echo 'export PYENV_ROOT="$$HOME/.pyenv"' >> ~/.bash_profile; \
+		echo 'command -v pyenv >/dev/null || export PATH="$$PYENV_ROOT/bin:$$PATH"' >> ~/.bash_profile; \
+		echo 'eval "$$(pyenv init -)"' >> ~/.bash_profile; \
+		echo "Please restart your shell or run: source ~/.bash_profile"; \
+	else \
+		echo "pyenv is already installed"; \
+	fi
+
+install-python: install-pyenv ## install Python version specified in .python-version
+	@if [ -f .python-version ]; then \
+		PYTHON_VERSION=$$(cat .python-version); \
+		echo "Installing Python $$PYTHON_VERSION with pyenv..."; \
+		pyenv install -s $$PYTHON_VERSION || pyenv install $$PYTHON_VERSION; \
+		pyenv local $$PYTHON_VERSION; \
+	else \
+		echo "No .python-version file found. Creating one with Python 3.11..."; \
+		echo "3.11" > .python-version; \
+		pyenv install -s 3.11 || pyenv install 3.11; \
+		pyenv local 3.11; \
+	fi
 
 check-credentials: ## verify client_secret.json exists
 	@if [ ! -f "$(CLIENT_SECRET)" ]; then \
@@ -33,7 +70,7 @@ install: ## install Python dependencies
 install-venv: venv ## create venv and install dependencies in it
 	$(VENV_PIP) install -r requirements.txt
 
-setup: install ## setup the system to run this application (alias for install)
+setup: install-python install ## setup the system to run this application
 
 run: check-credentials ## run the AutoSkipInbox
 	$(PYTHON) autoskipinbox.py
@@ -56,6 +93,9 @@ run-label-report: check-credentials ## run get_label_report.py
 test: ## test that Python and dependencies are available
 	@echo "Checking Python version..."
 	@$(PYTHON) --version
+	@if command -v pyenv >/dev/null 2>&1; then \
+		echo "Using pyenv Python: $$(pyenv version-name)"; \
+	fi
 	@echo "Checking required packages..."
 	@$(PYTHON) -c "import google.auth; import googleapiclient; print('✓ All dependencies available')" || (echo "✗ Missing dependencies. Run 'make install' or 'make install-venv'" && exit 1)
 
