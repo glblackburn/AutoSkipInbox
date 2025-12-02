@@ -2,46 +2,51 @@
 
 ## Overview
 
-TODO
+AutoSkipInbox is a Gmail automation tool that helps manage your inbox by automatically processing emails based on labels. The tool can archive emails that aren't explicitly marked to stay in the inbox, and can create Gmail filters to automate future email handling.
 
-## Install
+The project provides both Ruby and Python implementations, allowing you to choose the language that best fits your environment. Both implementations provide the same core functionality:
+- Process inbox emails and archive those not marked to stay
+- Create Gmail filters based on email addresses
+- Generate reports on email labels and senders
+- Manage email labels and filters
 
-The installer will do the following:
-* detech ruby in your path
-* check the version
-* install the needed gems
-* add "run-it.sh" to your crontab.
+## Release Notes
 
-### Prerequisites
+### Version 2.0.0 - Python Implementation (2025-12-01)
+- 🐍 **New**: Complete Python implementation added alongside Ruby
+- 📁 **New**: Project reorganized into `python/` and `ruby/` directories
+- 🔒 **Security**: Credentials moved to `~/.secure/AutoSkipInbox/` for Python version
+- 🛠️ **New**: Python Makefile with pyenv support
+- 📚 **New**: Comprehensive Python documentation
 
-For MacOS, install an updated version of ruby.  Personally, I use
-Homebrew to install Ruby.
+For detailed release notes, see [RELEASE_NOTES.md](RELEASE_NOTES.md).
 
-Homebrew: https://brew.sh/
+### Previous Releases
+- **Version 1.0.0**: Initial Ruby release with Gmail API integration
 
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+## Installation
 
-Ruby: https://www.ruby-lang.org/en/documentation/installation/#homebrew
+This project provides both Ruby and Python implementations. Choose the one that best fits your needs.
 
-    brew install ruby
+### Ruby Implementation
 
-### install.sh
-To install run the "install.sh" script.
+For Ruby installation and usage instructions, see [ruby/README.md](ruby/README.md).
 
-    install.sh
+Quick start:
+```bash
+cd ruby
+./install.sh
+```
 
-### run-it.sh
+### Python Implementation
 
-run-it.sh does not depended on the PATH variable, because this script
-is run from cron.  The RUBY_PATH variable needs to be updated to the
-install location for the version of ruby you are using.
+For Python installation and usage instructions, see [python/README.md](python/README.md).
 
-Homebrew as of 3/19/2019, no longer symlinks ruby into /usr/local/bin.  The new path to ruby is '/usr/local/opt/ruby/bin'.
-
-From the Homebrew install for ruby.
-
-    If you need to have ruby first in your PATH run:
-      echo 'export PATH="/usr/local/opt/ruby/bin:$PATH"' >> ~/.bash_profile
+Quick start:
+```bash
+cd python
+make setup
+```
 
 # TODO
 * figure out how to do google auth as part of install.  there is a step past saving the client_secret.json file that prompts as part of the auth.
@@ -52,74 +57,37 @@ From the Homebrew install for ruby.
 * DONE: update installer to install ruby gems
 
 # Scripts
-## install.sh
 
-install.sh will setup the needed libraries for the AutoSkipInbox and
-install a crontab to run every 15 minutes.
+## Ruby Scripts
 
-* checking compatability:
-  https://stackoverflow.com/questions/44961182/ruby-upgrade-version-and-code-compatibility-checker
+For detailed information about Ruby scripts, see [ruby/README.md](ruby/README.md).
 
-## run-it.sh
+- **autoskipinbox.rb**: Processes emails in the Inbox. Any email that is not marked as "keep-inbox" or "autoskipinbox/tofix" will be archived and the "autoskipinbox" label will be applied.
+- **get-tofix-from.rb**: Processes emails with the label "autoskipinbox/tofix" and creates filters to keep future emails from those addresses in the inbox.
+- **get-todump-from.rb**: Processes emails with the label "autoskipinbox/todump" and creates filters to dump future emails from those addresses.
+- **get-filters.rb**: Lists all Gmail filters.
+- **get-label-report.rb**: Pulls counts of unique from addresses with each label used.
+- **run-it.sh**: Wrapper script that calls autoskipinbox.rb, get-tofix-from.rb, get-todump-from.rb, and get-filters.rb. Captures output into timestamped logs and processes summary statistics.
 
-run-it.sh is the wrapper script that is setup in cron.  This script
-calls autoskipinbox.rb and get-tofix-from.rb.  The script also
-captures the output from the ruby scripts into a datetime stamped run
-log.  The run log is then processes for summary statictics that are
-saved in the autoskipinbox.log.
+## Python Scripts
 
-## autoskipinbox.rb
+For detailed information about Python scripts, see [python/README.md](python/README.md).
 
-autoskipinbox.rb will process email in the Inbox.  Any email that is
-not marked as "keep-inbox" or "autoskipinbox/tofix" will be archived
-and the "autoskipinbox" will be applied.
-
-## get-tofix-from.rb
-
-get-tofix-from.rb will process any email with the label
-"autoskipinbox/tofix".  For each matching message, a filter will be
-created to match incoming email with the from address and apply the
-"keep-inbox" label.
-
-* TODO: update to apply "keep-inbox" and "Inbox" labels.  Currently,
-  this is a manual step.
-
-## get-label-report.rb
-
-get-label-report.rb will pull counts of uniq from addresses with each
-label used.
+- **autoskipinbox.py**: Main inbox processing script
+- **get_tofix_from.py**: Process tofix emails and create keep-inbox filters
+- **get_todump_from.py**: Process todump emails and create dump filters
+- **get_filters.py**: List all Gmail filters
+- **get_label_report.py**: Generate label statistics report
+- **run-it.sh**: Wrapper script that calls autoskipinbox.py, get_tofix_from.py, get_todump_from.py, and get_filters.py. Captures output into timestamped logs and processes summary statistics.
 
 # References
 
-# Ruby Setup
+## Gmail API
 
-## gem install permission issue 
-On macOS Mojave with the default ruby install the below error will display when running "gem install google-api-client -v '~> 0.8'"
+### Ruby
+- [Google Gmail API Quickstart for Ruby](https://developers.google.com/gmail/api/quickstart/ruby)
+- [Ruby Documentation](ruby/README.md#references)
 
-    ERROR:  While executing gem ... (Gem::FilePermissionError)
-        You don't have write permissions for the /Library/Ruby/Gems/2.3.0 directory.
-
-https://stackoverflow.com/questions/14607193/installing-gem-or-updating-rubygems-fails-with-permissions-error
-
-# GMail API
-## Google GMail API for Ruby
-https://developers.google.com/gmail/api/quickstart/ruby
-
-## Install the Google Client Library
-gem install google-api-client -v '~> 0.8'
-
-Run example
-ruby quickstart.rb
-
-NOTE: remove token.yaml when there is an authentiation error.  could
-be a time timeout issue
-
-## Rubydoc
-https://www.rubydoc.info/github/google/google-api-ruby-client/Google/Apis/GmailV1
-https://www.rubydoc.info/github/google/google-api-ruby-client/Google/Apis/GmailV1/GmailService#list_user_messages-instance_method
-https://www.rubydoc.info/github/google/google-api-ruby-client/Google/Apis/GmailV1/GmailService#get_user_message-instance_method
-https://www.rubydoc.info/github/google/google-api-ruby-client/Google/Apis/GmailV1/ListMessagesResponse#messages-instance_method
-https://www.rubydoc.info/github/google/google-api-ruby-client/Google/Apis/GmailV1/Message
-
-## Example
-https://gist.github.com/jkotchoff/34fba5c6df03a5caadad286b80c97b96#file-emailed_zip_file_extractor-rb-L81
+### Python
+- [Google Gmail API Quickstart for Python](https://developers.google.com/gmail/api/quickstart/python)
+- [Python Documentation](python/README.md#references)

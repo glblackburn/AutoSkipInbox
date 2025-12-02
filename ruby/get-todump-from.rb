@@ -1,5 +1,7 @@
 #
-# helpful script to produce a list of emails from GMail that have the label "autoskipinbox-todump"
+# Process emails with the "autoskipinbox/todump" label:
+# - Move messages to the dump (apply "autoskipinbox/dump" label, remove inbox/todump labels)
+# - Create Gmail filters for each unique sender to automatically dump future emails
 #
 # run:
 # ruby get-todump-from.rb | tee get-todump-from.out

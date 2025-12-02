@@ -1,10 +1,11 @@
 #!/bin/bash
 
-RUBY_PATH="/usr/local/opt/ruby/bin"
-PATH="${RUBY_PATH}:${PATH}"
+PYTHON_PATH="python3"
+PATH="${PYTHON_PATH}:${PATH}"
 
 BASEDIR=$(dirname $0)
-LOGDIR=${BASEDIR}/log
+PARENTDIR=$(dirname ${BASEDIR})
+LOGDIR=${PARENTDIR}/log
 TIMESTAMP=`date +%Y-%m-%d_%H%M%S`
 RUNLOG=${LOGDIR}/run-it_${TIMESTAMP}.log
 FILTERSLOG=${LOGDIR}/filters_${TIMESTAMP}.log
@@ -18,39 +19,40 @@ cat <<EOF
 START=[${START}]
 HOME=[${HOME}]
 BASEDIR=[${BASEDIR}]
+PARENTDIR=[${PARENTDIR}]
 LOGDIR=[${LOGDIR}]
 LOG=[${LOG}]
-ruby=[`which ruby`]
+python=[`which python3`]
 ================================================================================
 EOF
 
 cat <<EOF
 ================================================================================
-run autoskipinbox.rb
+run autoskipinbox.py
 ================================================================================
 EOF
-ruby autoskipinbox.rb
+python3 autoskipinbox.py
 
 cat <<EOF
 ================================================================================
-run get-tofix-from.rb
+run get_tofix_from.py
 ================================================================================
 EOF
-ruby get-tofix-from.rb
+python3 get_tofix_from.py
 
 cat <<EOF
 ================================================================================
-run get-todump-from.rb
+run get_todump_from.py
 ================================================================================
 EOF
-ruby get-todump-from.rb
+python3 get_todump_from.py
 
 cat <<EOF
 ================================================================================
-run get-filters.rb
+run get_filters.py
 ================================================================================
 EOF
-ruby get-filters.rb > ${FILTERSLOG}
+python3 get_filters.py > ${FILTERSLOG}
 
 cat <<EOF
 ================================================================================
@@ -58,6 +60,7 @@ git status check
 ================================================================================
 EOF
 
+cd ${PARENTDIR}
 git status
 #git add .
 #git commit -m "run ${TIMESTAMP}"

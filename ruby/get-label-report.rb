@@ -1,8 +1,9 @@
 #
-# helpful script to produce a list of emails from GMail that have the label "autoskipinbox-tofix"
+# Generate a report of unique from addresses and their counts for multiple labels:
+# inbox, autoskipinbox, autoskipinbox-tofix, autoskipinbox-dump, autoskipinbox-todump
 #
 # run:
-# ruby get-tofix-from.rb | tee get-tofix-from.out
+# ruby get-label-report.rb | tee get-label-report.out
 #
 require_relative 'authorize.rb'
 

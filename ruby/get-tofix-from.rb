@@ -1,5 +1,7 @@
 #
-# helpful script to produce a list of emails from GMail that have the label "autoskipinbox-tofix"
+# Process emails with the "autoskipinbox-tofix" label:
+# - Move messages back to inbox and apply "keep-inbox" label
+# - Create Gmail filters for each unique sender to keep future emails in inbox
 #
 # run:
 # ruby get-tofix-from.rb | tee get-tofix-from.out
@@ -56,7 +58,7 @@ if result.messages && !result.messages.empty?
     fromlist[email] += 1
     puts "email=[#{email}]"
 
-    # move the message to the inbox and add to
+    # Move the message to the inbox and add keep-inbox label
     modifyMessageRequest=Google::Apis::GmailV1::ModifyMessageRequest.new
     modifyMessageRequest.add_label_ids=[keepInboxLabelId, inboxId]
     modifyMessageRequest.remove_label_ids=[autoskipLabelId, toFixLabelId]

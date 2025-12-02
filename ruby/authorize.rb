@@ -3,8 +3,8 @@ require 'googleauth'
 require 'googleauth/stores/file_token_store'
 
 OOB_URI = 'urn:ietf:wg:oauth:2.0:oob'.freeze
-CLIENT_SECRETS_PATH = 'config/client_secret.json'.freeze
-CREDENTIALS_PATH = 'config/token.yaml'.freeze
+CLIENT_SECRETS_PATH = File.join(File.dirname(__FILE__), '..', 'config', 'client_secret.json').freeze
+CREDENTIALS_PATH = File.join(File.dirname(__FILE__), '..', 'config', 'token.yaml').freeze
 #SCOPE = Google::Apis::GmailV1::AUTH_GMAIL_READONLY
 #SCOPE = Google::Apis::GmailV1::AUTH_GMAIL_MODIFY
 #SCOPE = Google::Apis::GmailV1::AUTH_GMAIL_SETTINGS_BASIC
