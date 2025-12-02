@@ -13,7 +13,7 @@ The Python scripts provide the same functionality as the Ruby versions:
 
 ## Prerequisites
 
-- Python 3.7 or higher
+- Python 3.11 or higher (specified in `.python-version`)
 - pip (Python package installer)
 
 ## Installation
@@ -147,7 +147,7 @@ If you get errors about missing labels:
 
 If you get import errors:
 1. Make sure you've installed all dependencies: `pip install -r requirements.txt`
-2. Make sure you're running Python 3.7 or higher: `python3 --version`
+2. Make sure you're running Python 3.11 or higher: `python3 --version`
 
 ## Differences from Ruby Version
 

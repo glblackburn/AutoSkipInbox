@@ -153,7 +153,7 @@ ruby get-filters.rb
 ## run-it.sh
 
 run-it.sh is the wrapper script that is setup in cron. This script:
-- Calls `autoskipinbox.rb` and `get-tofix-from.rb`
+- Calls `autoskipinbox.rb`, `get-tofix-from.rb`, `get-todump-from.rb`, and `get-filters.rb`
 - Captures the output from the ruby scripts into a datetime stamped run log
 - Processes the run log for summary statistics that are saved in `autoskipinbox.log`
 

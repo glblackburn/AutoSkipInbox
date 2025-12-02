@@ -2,7 +2,13 @@
 
 ## Overview
 
-TODO
+AutoSkipInbox is a Gmail automation tool that helps manage your inbox by automatically processing emails based on labels. The tool can archive emails that aren't explicitly marked to stay in the inbox, and can create Gmail filters to automate future email handling.
+
+The project provides both Ruby and Python implementations, allowing you to choose the language that best fits your environment. Both implementations provide the same core functionality:
+- Process inbox emails and archive those not marked to stay
+- Create Gmail filters based on email addresses
+- Generate reports on email labels and senders
+- Manage email labels and filters
 
 ## Release Notes
 
@@ -61,7 +67,7 @@ For detailed information about Ruby scripts, see [ruby/README.md](ruby/README.md
 - **get-todump-from.rb**: Processes emails with the label "autoskipinbox/todump" and creates filters to dump future emails from those addresses.
 - **get-filters.rb**: Lists all Gmail filters.
 - **get-label-report.rb**: Pulls counts of unique from addresses with each label used.
-- **run-it.sh**: Wrapper script that calls autoskipinbox.rb and get-tofix-from.rb, captures output into timestamped logs, and processes summary statistics.
+- **run-it.sh**: Wrapper script that calls autoskipinbox.rb, get-tofix-from.rb, get-todump-from.rb, and get-filters.rb. Captures output into timestamped logs and processes summary statistics.
 
 ## Python Scripts
 
@@ -72,7 +78,7 @@ For detailed information about Python scripts, see [python/README.md](python/REA
 - **get_todump_from.py**: Process todump emails and create dump filters
 - **get_filters.py**: List all Gmail filters
 - **get_label_report.py**: Generate label statistics report
-- **run-it.sh**: Wrapper script for running all Python scripts
+- **run-it.sh**: Wrapper script that calls autoskipinbox.py, get_tofix_from.py, get_todump_from.py, and get_filters.py. Captures output into timestamped logs and processes summary statistics.
 
 # References
 
