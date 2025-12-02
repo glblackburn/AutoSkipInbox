@@ -23,9 +23,12 @@ This release adds a complete Python implementation of AutoSkipInbox alongside th
 
 #### Project Organization
 - **New directory structure**:
-  - `python/` - All Python scripts and configuration
-  - `ruby/` - All Ruby scripts and configuration
+  - `python/` - All Python scripts, configuration, Makefile, and documentation
+  - `ruby/` - All Ruby scripts, configuration, Makefile, install.sh, and documentation
 - **Improved maintainability**: Clear separation between implementations
+- **Ruby reorganization**: All Ruby files moved to `ruby/` directory with updated paths
+  - Ruby scripts now use `../config/` and `../log/` paths
+  - Ruby Makefile, install.sh, and wrapper scripts moved to `ruby/`
 
 #### Security Enhancements
 - **Secure credential storage**: Credentials moved from `config/` to `~/.secure/AutoSkipInbox/`
@@ -66,6 +69,17 @@ make run                      # Run the main script
 ### 📚 Documentation
 
 - Added `python/README.md` with complete setup guide
+- Added `ruby/README.md` with Ruby-specific installation and usage instructions
+- Added `RELEASE_NOTES.md` with comprehensive release information
+- Updated main `README.md` with overview, release notes section, and links to detailed docs
+- Fixed all documentation to accurately match codebase:
+  - Corrected Python version requirements (3.11+)
+  - Fixed run-it.sh descriptions to list all 4 scripts it calls
+  - Updated all path references for new directory structure
+- Fixed all code comments to accurately reflect script functionality:
+  - Updated header comments in all scripts
+  - Fixed incomplete comments
+  - Improved descriptions of script operations
 - Updated troubleshooting section
 - Added migration notes
 - Included examples for all scripts
@@ -100,28 +114,36 @@ make run                      # Run the main script
 ### 📝 Files Added
 
 #### Python Implementation
-- `python/authorize.py`
-- `python/labels.py`
-- `python/filters.py`
-- `python/autoskipinbox.py`
-- `python/get_filters.py`
-- `python/get_label_report.py`
-- `python/get_todump_from.py`
-- `python/get_tofix_from.py`
-- `python/run-it.sh`
-- `python/get-label-report.sh`
-- `python/Makefile`
-- `python/README.md`
-- `python/requirements.txt`
-- `python/.python-version`
+- `python/authorize.py` - OAuth2 authorization
+- `python/labels.py` - Label mapping helper
+- `python/filters.py` - Filter mapping helper
+- `python/autoskipinbox.py` - Main inbox processing script
+- `python/get_filters.py` - List all Gmail filters
+- `python/get_label_report.py` - Generate label statistics report
+- `python/get_todump_from.py` - Process todump emails and create filters
+- `python/get_tofix_from.py` - Process tofix emails and create filters
+- `python/run-it.sh` - Wrapper script that calls all Python scripts
+- `python/get-label-report.sh` - Wrapper script for label report generation
+- `python/Makefile` - Build and run targets with pyenv support
+- `python/README.md` - Complete setup and usage guide
+- `python/requirements.txt` - Python dependencies
+- `python/.python-version` - Python version specification (3.11)
 
 #### Project Organization
-- All Ruby files moved to `ruby/` directory
-- Updated `.gitignore` for Python files
+- All Ruby files moved to `ruby/` directory:
+  - `ruby/run-it.sh` - Wrapper script that calls all Ruby scripts
+  - `ruby/get-label-report.sh` - Wrapper script for label report generation
+  - `ruby/Makefile` - Ruby build and run configuration
+  - `ruby/install.sh` - Ruby installation script
+  - `ruby/README.md` - Ruby-specific documentation
+- Updated `.gitignore` for Python files (__pycache__, venv, etc.)
+- Updated all path references throughout codebase
 
 ### 🐛 Bug Fixes
 - Improved error handling in credential validation
 - Better path resolution for cross-platform compatibility
+- Fixed all code comments to accurately describe script functionality
+- Fixed documentation discrepancies (Python version, script descriptions, etc.)
 
 ### ⚠️ Breaking Changes
 - **None for Ruby users**: All Ruby functionality preserved
