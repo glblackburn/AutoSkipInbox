@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# helpful script to produce a list of emails from GMail that have the label "autoskipinbox-tofix"
+# List all Gmail filters and display their criteria and actions.
 #
 # run:
 # python get_filters.py | tee get-filters.out

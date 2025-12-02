@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 #
-# helpful script to produce a list of emails from GMail that have the label "autoskipinbox-todump"
+# Process emails with the "autoskipinbox/todump" label:
+# - Move messages to the dump (apply "autoskipinbox/dump" label, remove inbox/todump labels)
+# - Create Gmail filters for each unique sender to automatically dump future emails
 #
 # run:
 # python get_todump_from.py | tee get-todump-from.out

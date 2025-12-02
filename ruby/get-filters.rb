@@ -1,5 +1,5 @@
 #
-# helpful script to produce a list of emails from GMail that have the label "autoskipinbox-tofix"
+# List all Gmail filters and display their criteria and actions.
 #
 # run:
 # ruby get-filters.rb | tee get-filters.out

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 #
-# helpful script to produce a list of emails from GMail that have the label "autoskipinbox-tofix"
+# Generate a report of unique from addresses and their counts for multiple labels:
+# inbox, autoskipinbox, autoskipinbox-tofix, autoskipinbox-dump, autoskipinbox-todump
 #
 # run:
 # python get_label_report.py | tee get-label-report.out

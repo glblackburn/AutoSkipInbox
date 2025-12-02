@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 #
-# helpful script to produce a list of emails from GMail that have the label "autoskipinbox-tofix"
+# Process emails with the "autoskipinbox-tofix" label:
+# - Move messages back to inbox and apply "keep-inbox" label
+# - Create Gmail filters for each unique sender to keep future emails in inbox
 #
 # run:
 # python get_tofix_from.py | tee get-tofix-from.out

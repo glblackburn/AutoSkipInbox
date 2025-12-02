@@ -1,5 +1,7 @@
 #
-# helpful script to produce a list of emails from GMail that have the label "autoskipinbox-tofix"
+# Process emails in the Inbox and automatically archive emails that aren't marked
+# as "keep-inbox" or "autoskipinbox/tofix". Applies the "autoskipinbox" label
+# and removes the "INBOX" label for emails to be archived.
 #
 # run:
 # ruby autoskipinbox.rb | tee autoskipinbox.out
